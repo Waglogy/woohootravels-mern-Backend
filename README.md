@@ -20,6 +20,10 @@ Node.js Express + MongoDB backend with MVP architecture.
 
 Server runs at `http://localhost:3000` (or `PORT` from `.env`).
 
+## API documentation
+
+See **[docs/API_SPEC.md](docs/API_SPEC.md)** for the full API spec: contact form, booking form, admin (auth, packages, photos, content) and notes for client discussion.
+
 ## Test route
 
 - **GET** `/api/health` – Returns a simple JSON health check.
