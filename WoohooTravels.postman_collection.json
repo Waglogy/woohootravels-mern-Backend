@@ -1,0 +1,187 @@
+{
+  "info": {
+    "name": "Woohoo Travels API",
+    "description": "Postman collection for testing Woohoo Travels backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081/api",
+      "type": "string"
+    },
+    {
+      "key": "contactId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bookingId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Create Contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"message\": \"Hello, I need help with booking.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["contacts"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "    const response = pm.response.json();",
+              "    pm.collectionVariables.set('contactId', response.contact._id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get All Contacts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["contacts"]
+        }
+      }
+    },
+    {
+      "name": "Get Contact by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contacts/{{contactId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["contacts", "{{contactId}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Contact",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"message\": \"Updated message.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/contacts/{{contactId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["contacts", "{{contactId}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Contact",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contacts/{{contactId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["contacts", "{{contactId}}"]
+        }
+      }
+    },
+    {
+      "name": "Create Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1234567890\",\n  \"date\": \"2024-12-25\",\n  \"destination\": \"Paris\",\n  \"travelers\": 2,\n  \"children\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/bookings",
+          "host": ["{{baseUrl}}"],
+          "path": ["bookings"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "    const response = pm.response.json();",
+              "    pm.collectionVariables.set('bookingId', response.booking._id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Booking by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/bookings/{{bookingId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["bookings", "{{bookingId}}"]
+        }
+      }
+    },
+    {
+      "name": "Cancel Booking",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/bookings/{{bookingId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["bookings", "{{bookingId}}"]
+        }
+      }
+    }
+  ]
+}
